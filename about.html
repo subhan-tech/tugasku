@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <!-- ============================================================
+       [HEAD] Tentang Kami & Kontak Page
+       ============================================================ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tentang Kami — GameZONE</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+
+    /* ============================================================
+       [PAGE HEADER]
+       ============================================================ */
+    .page-header {
+      background: linear-gradient(135deg, #070b14 0%, #0a1628 100%);
+      border-bottom: 1px solid var(--border-color);
+      padding: 64px 0 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: -60px;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 300px;
+      background: radial-gradient(ellipse, rgba(0,212,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .page-header .breadcrumb {
+      font-size: var(--fs-sm);
+      color: var(--text-dark);
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-header .breadcrumb a { color: var(--text-muted); }
+    .page-header .breadcrumb a:hover { color: var(--accent-cyan); }
+
+    .page-header h1 {
+      font-size: var(--fs-4xl);
+      color: #fff;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-header p {
+      max-width: 480px;
+      margin: 12px auto 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ============================================================
+       [PROFIL USAHA - ABOUT SECTION]
+       Layout 2 kolom: gambar kiri, teks kanan.
+       ============================================================ */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;  /* <-- Ubah rasio kolom gambar dan teks */
+      gap: 64px;
+      align-items: center;
+    }
+
+    .about-image-wrap {
+      position: relative;
+    }
+
+    .about-image-wrap img {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+    }
+
+    /* Badge floating di atas gambar */
+    .about-badge {
+      position: absolute;
+      bottom: -16px;
+      right: -16px;
+      background: linear-gradient(135deg, var(--accent-cyan), #0099cc);
+      color: #000;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: var(--fs-lg);
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .about-content .eyebrow {
+      font-size: var(--fs-xs);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .about-content h2 {
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+
+    .about-content h2 span { color: var(--accent-cyan); }
+
+    .about-content p {
+      margin-bottom: 16px;
+      line-height: 1.8;
+    }
+
+    /* ============================================================
+       [VISI MISI SECTION]
+       Dua kartu: Visi (kiri) dan Misi (kanan).
+       ============================================================ -->*/
+    .visi-misi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;   /* <-- 2 kolom untuk visi dan misi */
+      gap: 28px;
+    }
+
+    .vm-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      transition: var(--transition);
+    }
+
+    .vm-card:hover {
+      border-color: rgba(0, 212, 255, 0.3);
+    }
+
+    .vm-card.visi-card {
+      border-top: 3px solid var(--accent-cyan);
+    }
+
+    .vm-card.misi-card {
+      border-top: 3px solid var(--accent-orange);
+    }
+
+    .vm-card .vm-icon {
+      font-size: 2.5rem;
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .vm-card h3 {
+      color: var(--text-primary);
+      margin-bottom: 14px;
+    }
+
+    .vm-card.visi-card h3 { color: var(--accent-cyan); }
+    .vm-card.misi-card h3 { color: var(--accent-orange); }
+
+    .vm-card p {
+      font-size: var(--fs-base);
+      line-height: 1.8;
+    }
+
+    /* Daftar poin misi */
+    .misi-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .misi-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--text-muted);
+      font-size: var(--fs-base);
+    }
+
+    .misi-item::before {
+      content: "▸";
+      color: var(--accent-orange);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ============================================================
+       [TIM / NILAI KAMI - CARDS]
+       Nilai-nilai perusahaan dalam 3 kartu.
+       ============================================================ */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);   /* <-- 3 kolom nilai */
+      gap: 24px;
+    }
+
+    .value-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .value-card:hover {
+      border-color: rgba(0, 212, 255, 0.25);
+      transform: translateY(-4px);
+    }
+
+    .value-card .value-icon {
+      font-size: 2.5rem;
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    .value-card h4 {
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    .value-card p { font-size: var(--fs-sm); }
+
+    /* ============================================================
+       [KONTAK SECTION]
+       2 kolom: info kontak kiri, form kontak kanan.
+       ============================================================ */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;   /* <-- Ubah rasio kolom */
+      gap: 64px;
+      align-items: start;
+    }
+
+    .contact-info h3 {
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+    .contact-info > p {
+      margin-bottom: 32px;
+    }
+
+    /* Item kontak satu baris (ikon + teks) */
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .contact-item .ci-icon {
+      width: 44px;
+      height: 44px;
+      background-color: rgba(0, 212, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .contact-item .ci-text strong {
+      display: block;
+      color: var(--text-primary);
+      font-size: var(--fs-sm);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .contact-item .ci-text span {
+      color: var(--text-muted);
+      font-size: var(--fs-sm);
+    }
+
+    /* Kotak form kontak -->*/
+    .contact-form-wrap {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+    }
+
+    .contact-form-wrap h3 {
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .contact-form-wrap > p {
+      font-size: var(--fs-sm);
+      margin-bottom: 24px;
+    }
+
+    /* Pesan sukses setelah form dikirim (disembunyikan default) */
+    .form-success {
+      display: none;
+      background-color: rgba(0, 212, 255, 0.08);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      color: var(--accent-cyan);
+      font-size: var(--fs-sm);
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 1024px) {
+      .about-layout   { grid-template-columns: 1fr; gap: 40px; }
+      .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+      .about-badge    { right: 16px; }
+    }
+
+    @media (max-width: 768px) {
+      .visi-misi-grid { grid-template-columns: 1fr; }
+      .values-grid    { grid-template-columns: 1fr; }
+      .contact-form-wrap { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       [NAVBAR]
+       ============================================================ -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="navbar-logo">GAME<span>ZONE</span></a>
+      <ul class="navbar-menu">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="kategori.html">Kategori</a></li>
+        <li><a href="produk.html">Produk & Top-Up</a></li>
+        <li><a href="about.html" class="active">Tentang Kami</a></li>
+        <li><a href="produk.html" class="navbar-cta">Top-Up Sekarang</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <!-- ============================================================
+       [PAGE HEADER]
+       ============================================================ -->
+  <div class="page-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="index.html">Beranda</a> › Tentang Kami</p>
+      <h1>Tentang <span style="color: var(--accent-cyan)">GameZONE</span></h1>
+      <p>Kenali lebih dekat toko game dan top-up terpercaya pilihan gamer Indonesia.</p>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       [PROFIL USAHA]
+       Bagian cerita/sejarah singkat tentang usaha.
+       Ubah teks paragraf dan gambar sesuai profil asli.
+       ============================================================ -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="about-layout">
+
+        <!-- Kolom kiri: Gambar toko / logo -->
+        <div class="about-image-wrap">
+          <!-- Ganti dengan foto toko atau logo asli -->
+          <img
+            src="https://placehold.co/500x400/151c2e/00d4ff?text=Foto+Toko+GameZONE"
+            alt="GameZONE Store"
+          />
+          <!-- Badge angka tahun/pengalaman — ubah teks ini -->
+          <div class="about-badge">
+            5+<br>
+            <span style="font-size:0.75rem;">Tahun Berdiri</span>
+          </div>
+        </div>
+
+        <!-- Kolom kanan: Teks profil -->
+        <div class="about-content">
+          <span class="eyebrow">Profil Usaha</span>
+          <h2>Kami adalah <span>GameZONE</span></h2>
+
+          <!-- PARAGRAF PROFIL: Ubah teks di sini -->
+          <p>
+            GameZONE adalah toko retail game dan jasa top-up yang berdiri sejak 2020 di Kota Jambi.
+            Kami hadir untuk memenuhi kebutuhan gaming community dengan menyediakan game original
+            untuk berbagai platform, mulai dari PC hingga konsol terbaru.
+          </p>
+          <p>
+            Tidak hanya menjual game fisik dan digital, kami juga melayani top-up currency in-game
+            untuk puluhan game populer seperti Mobile Legends, Genshin Impact, PUBG Mobile, dan lainnya.
+            Semua layanan kami dirancang untuk memberikan kemudahan, keamanan, dan kecepatan.
+          </p>
+          <p>
+            Dengan ribuan transaksi yang berhasil dan rating kepuasan 4.9/5, GameZONE dipercaya
+            oleh lebih dari 10.000 gamer aktif di Jambi dan sekitarnya.
+          </p>
+
+          <!-- Tombol ajakan ke halaman produk -->
+          <div class="flex gap-16 mt-24" style="flex-wrap:wrap;">
+            <a href="produk.html" class="btn-primary">Lihat Produk Kami</a>
+            <a href="#kontak" class="btn-secondary">Hubungi Kami</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- [/PROFIL USAHA] -->
+
+
+  <!-- ============================================================
+       [VISI & MISI]
+       Dua kartu untuk visi dan misi usaha.
+       Ubah teks sesuai visi misi asli.
+       ============================================================ -->
+  <section class="section-padding" style="background-color: var(--bg-secondary); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+    <div class="container">
+
+      <div class="section-header">
+        <span class="eyebrow">Arah Kami</span>
+        <h2>Visi & <span>Misi</span></h2>
+      </div>
+
+      <div class="visi-misi-grid">
+
+        <!-- KARTU VISI: Ubah teks visi di sini -->
+        <div class="vm-card visi-card">
+          <span class="vm-icon">🎯</span>
+          <h3>Visi</h3>
+          <p>
+            Menjadi toko retail game dan platform top-up terbesar dan terpercaya di Sumatera,
+            yang memberikan akses mudah, cepat, dan terjangkau bagi seluruh gamer Indonesia
+            untuk menikmati dunia gaming tanpa batas.
+          </p>
+        </div>
+
+        <!-- KARTU MISI: Ubah poin-poin misi di sini -->
+        <div class="vm-card misi-card">
+          <span class="vm-icon">🚀</span>
+          <h3>Misi</h3>
+          <!-- Tambah/hapus <div class="misi-item"> sesuai jumlah poin misi -->
+          <div class="misi-list">
+            <div class="misi-item">Menyediakan koleksi game original terlengkap untuk semua platform dengan harga terbaik.</div>
+            <div class="misi-item">Menghadirkan layanan top-up otomatis yang cepat, aman, dan terpercaya.</div>
+            <div class="misi-item">Memberikan pelayanan pelanggan yang ramah, responsif, dan profesional 24 jam sehari.</div>
+            <div class="misi-item">Membangun komunitas gamer yang positif dan saling mendukung di Jambi.</div>
+            <div class="misi-item">Terus berinovasi untuk menghadirkan produk dan layanan gaming terbaru.</div>
+          </div>
+        </div>
+
+      </div>
+      <!-- [/VISI MISI GRID] -->
+
+    </div>
+  </section>
+  <!-- [/VISI & MISI] -->
+
+
+  <!-- ============================================================
+       [NILAI-NILAI KAMI]
+       3 kartu nilai perusahaan.
+       ============================================================ -->
+  <section class="section-padding">
+    <div class="container">
+
+      <div class="section-header">
+        <span class="eyebrow">Filosofi Kami</span>
+        <h2>Nilai-Nilai <span>GameZONE</span></h2>
+      </div>
+
+      <div class="values-grid">
+
+        <!-- NILAI 1: Ubah ikon, judul, dan deskripsi -->
+        <div class="value-card">
+          <span class="value-icon">🤝</span>
+          <h4>Kepercayaan</h4>
+          <p>Kepercayaan pelanggan adalah fondasi utama kami. Setiap produk dan layanan kami berkomitmen pada kualitas dan keamanan.</p>
+        </div>
+
+        <!-- NILAI 2 -->
+        <div class="value-card">
+          <span class="value-icon">⚡</span>
+          <h4>Kecepatan</h4>
+          <p>Kami memahami waktu Anda berharga. Proses top-up dan pengiriman game digital dirancang untuk selesai secepat mungkin.</p>
+        </div>
+
+        <!-- NILAI 3 -->
+        <div class="value-card">
+          <span class="value-icon">💎</span>
+          <h4>Kualitas</h4>
+          <p>Semua game yang kami jual adalah produk original resmi. Tidak ada produk bajakan atau ilegal di GameZONE.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+  <!-- [/NILAI-NILAI] -->
+
+
+  <!-- ============================================================
+       [KONTAK SECTION]
+       ID "kontak" digunakan oleh tombol anchor link di atas.
+       ============================================================ -->
+  <section class="section-padding" id="kontak" style="background-color: var(--bg-secondary); border-top: 1px solid var(--border-color);">
+    <div class="container">
+
+      <div class="section-header">
+        <span class="eyebrow">Hubungi Kami</span>
+        <h2>Ada Pertanyaan? <span>Kontak Kami</span></h2>
+        <p>Tim kami siap membantu Anda dengan pertanyaan tentang produk, order, atau layanan lainnya.</p>
+      </div>
+
+      <div class="contact-layout">
+
+        <!-- ============================================================
+             KOLOM KIRI: INFO KONTAK
+             Ubah alamat, email, WhatsApp, dan jam operasional.
+             ============================================================ -->
+        <div class="contact-info">
+          <h3>Informasi Kontak</h3>
+          <p>Pilih cara yang paling mudah untuk menghubungi kami:</p>
+
+          <!-- ITEM KONTAK: ALAMAT -->
+          <div class="contact-item">
+            <div class="ci-icon">📍</div>
+            <div class="ci-text">
+              <strong>Alamat Toko</strong>
+              <!-- Ubah alamat toko di sini -->
+              <span>Jl. Gajah Mada No. 123, Kel. Talang Bakung,<br>Kec. Jambi Selatan, Kota Jambi 36135</span>
+            </div>
+          </div>
+
+          <!-- ITEM KONTAK: WHATSAPP -->
+          <div class="contact-item">
+            <div class="ci-icon">💬</div>
+            <div class="ci-text">
+              <strong>WhatsApp (CS 24 Jam)</strong>
+              <!-- Ubah nomor WhatsApp di sini -->
+              <span><a href="https://wa.me/6281234567890" style="color: var(--accent-cyan);">+62 812-3456-7890</a></span>
+            </div>
+          </div>
+
+          <!-- ITEM KONTAK: EMAIL -->
+          <div class="contact-item">
+            <div class="ci-icon">📧</div>
+            <div class="ci-text">
+              <strong>Email</strong>
+              <!-- Ubah email di sini -->
+              <span><a href="mailto:cs@gamezone.id" style="color: var(--accent-cyan);">cs@gamezone.id</a></span>
+            </div>
+          </div>
+
+          <!-- ITEM KONTAK: JAM OPERASIONAL -->
+          <div class="contact-item">
+            <div class="ci-icon">🕐</div>
+            <div class="ci-text">
+              <strong>Jam Operasional Toko</strong>
+              <!-- Ubah jam operasional di sini -->
+              <span>Senin – Sabtu: 09.00 – 21.00 WIB<br>Minggu: 10.00 – 18.00 WIB</span>
+            </div>
+          </div>
+
+          <!-- ITEM KONTAK: MEDIA SOSIAL -->
+          <div class="contact-item">
+            <div class="ci-icon">📱</div>
+            <div class="ci-text">
+              <strong>Media Sosial</strong>
+              <!-- Ubah link media sosial di sini -->
+              <span>
+                <a href="#" style="color: var(--accent-cyan);">Instagram</a> ·
+                <a href="#" style="color: var(--accent-cyan);">TikTok</a> ·
+                <a href="#" style="color: var(--accent-cyan);">Facebook</a>
+              </span>
+            </div>
+          </div>
+
+        </div>
+        <!-- [/KOLOM KIRI] -->
+
+
+        <!-- ============================================================
+             KOLOM KANAN: FORM KONTAK
+             Ubah teks label dan placeholder sesuai kebutuhan.
+             ============================================================ -->
+        <div class="contact-form-wrap">
+          <h3>Kirim Pesan</h3>
+          <p>Isi form di bawah dan kami akan membalas dalam waktu 1×24 jam.</p>
+
+          <!-- FORM KONTAK (tidak memakai <form> untuk kompatibilitas) -->
+          <div class="contact-form">
+
+            <!-- INPUT NAMA -->
+            <div class="form-group">
+              <label for="nama">Nama Lengkap *</label>
+              <input
+                type="text"
+                id="nama"
+                placeholder="Masukkan nama lengkap Anda"
+              />
+            </div>
+
+            <!-- INPUT EMAIL -->
+            <div class="form-group">
+              <label for="email">Alamat Email *</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="contoh@email.com"
+              />
+            </div>
+
+            <!-- INPUT NOMOR HP (opsional) -->
+            <div class="form-group">
+              <label for="phone">Nomor WhatsApp</label>
+              <input
+                type="tel"
+                id="phone"
+                placeholder="08xxxxxxxxxx (opsional)"
+              />
+            </div>
+
+            <!-- DROPDOWN SUBJEK -->
+            <div class="form-group">
+              <label for="subjek">Topik Pertanyaan</label>
+              <select id="subjek">
+                <!-- Tambah/hapus pilihan sesuai kebutuhan -->
+                <option value="">-- Pilih topik --</option>
+                <option value="produk">Informasi Produk Game</option>
+                <option value="topup">Jasa Top-Up</option>
+                <option value="order">Status Pesanan</option>
+                <option value="komplain">Keluhan / Komplain</option>
+                <option value="kerjasama">Kerja Sama</option>
+                <option value="lainnya">Lainnya</option>
+              </select>
+            </div>
+
+            <!-- TEXTAREA PESAN -->
+            <div class="form-group">
+              <label for="pesan">Pesan *</label>
+              <textarea
+                id="pesan"
+                placeholder="Tuliskan pertanyaan atau pesan Anda di sini..."
+              ></textarea>
+            </div>
+
+            <!-- TOMBOL KIRIM -->
+            <button class="btn-primary" onclick="kirimPesan()" style="width:100%; padding:14px; font-size: 1rem;">
+              📨 Kirim Pesan
+            </button>
+
+            <!-- Pesan sukses (muncul setelah tombol diklik) -->
+            <div id="form-success" class="form-success">
+              ✅ Pesan Anda berhasil dikirim! Kami akan menghubungi Anda segera.
+            </div>
+
+          </div>
+          <!-- [/FORM KONTAK] -->
+
+        </div>
+        <!-- [/KOLOM KANAN] -->
+
+      </div>
+      <!-- [/CONTACT LAYOUT] -->
+
+    </div>
+  </section>
+  <!-- [/KONTAK SECTION] -->
+
+
+  <!-- ============================================================
+       [FOOTER]
+       ============================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="logo">GAME<span>ZONE</span></span>
+          <p>Toko retail game dan jasa top-up terpercaya. Melayani pelanggan sejak 2020.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigasi</h4>
+          <ul>
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="kategori.html">Kategori</a></li>
+            <li><a href="produk.html">Produk & Top-Up</a></li>
+            <li><a href="about.html">Tentang Kami</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Produk</h4>
+          <ul>
+            <li><a href="produk.html">Game PC</a></li>
+            <li><a href="produk.html">Game Konsol</a></li>
+            <li><a href="produk.html">Mobile Legends</a></li>
+            <li><a href="produk.html">Genshin Impact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Kontak</h4>
+          <ul>
+            <li><a href="https://wa.me/6281234567890">WhatsApp</a></li>
+            <li><a href="mailto:cs@gamezone.id">cs@gamezone.id</a></li>
+            <li><a href="#kontak">Form Kontak</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 GameZONE. Semua hak dilindungi. | Retail Game & Jasa Top-Up</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ============================================================
+       [JAVASCRIPT - FORM KONTAK]
+       Simulasi pengiriman form. Ganti dengan logika asli jika
+       menggunakan backend atau layanan form seperti Formspree.
+       ============================================================ -->
+  <script>
+    /**
+     * kirimPesan()
+     * Validasi dan simulasi pengiriman form kontak.
+     * Ganti isi fungsi ini dengan fetch/AJAX ke endpoint asli.
+     */
+    function kirimPesan() {
+      const nama  = document.getElementById('nama').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const pesan = document.getElementById('pesan').value.trim();
+
+      // Validasi: nama, email, dan pesan wajib diisi
+      if (!nama || !email || !pesan) {
+        alert('Mohon lengkapi field yang wajib diisi: Nama, Email, dan Pesan.');
+        return;
+      }
+
+      // Validasi format email sederhana
+      if (!email.includes('@') || !email.includes('.')) {
+        alert('Format email tidak valid.');
+        return;
+      }
+
+      // Tampilkan pesan sukses
+      document.getElementById('form-success').style.display = 'block';
+
+      // Reset semua input setelah berhasil
+      document.getElementById('nama').value  = '';
+      document.getElementById('email').value = '';
+      document.getElementById('phone').value = '';
+      document.getElementById('subjek').value = '';
+      document.getElementById('pesan').value = '';
+
+      // Sembunyikan pesan sukses setelah 5 detik
+      setTimeout(() => {
+        document.getElementById('form-success').style.display = 'none';
+      }, 5000);
+    }
+  </script>
+
+</body>
+</html>

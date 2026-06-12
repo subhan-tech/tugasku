@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <!-- ============================================================
+       [HEAD] Kategori Page
+       ============================================================ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kategori — GameZONE</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Style khusus halaman kategori -->
+  <style>
+
+    /* ============================================================
+       [PAGE HEADER] Judul halaman dengan background gradien.
+       ============================================================ */
+    .page-header {
+      background: linear-gradient(135deg, #070b14 0%, #0a1628 100%);
+      border-bottom: 1px solid var(--border-color);
+      padding: 64px 0 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Efek cahaya melingkar di header */
+    .page-header::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: -60px;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 300px;
+      background: radial-gradient(ellipse, rgba(0,212,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .page-header .breadcrumb {
+      /* Navigasi tautan di atas judul (Beranda > Kategori) */
+      font-size: var(--fs-sm);
+      color: var(--text-dark);
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-header .breadcrumb a {
+      color: var(--text-muted);
+    }
+
+    .page-header .breadcrumb a:hover {
+      color: var(--accent-cyan);
+    }
+
+    .page-header h1 {
+      font-size: var(--fs-4xl);
+      color: #fff;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-header p {
+      max-width: 480px;
+      margin: 12px auto 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ============================================================
+       [KARTU KATEGORI BESAR]
+       Dua kartu utama: Retail Game dan Jasa Top-Up.
+       ============================================================ */
+    .category-card-big {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .category-card-big:hover {
+      border-color: var(--border-glow);
+      box-shadow: 0 16px 60px rgba(0, 212, 255, 0.12);
+      transform: translateY(-4px);
+    }
+
+    /* Gambar / Banner atas kartu kategori */
+    .category-card-big .cat-banner {
+      width: 100%;
+      height: 240px;            /* <-- Ubah tinggi banner gambar kategori */
+      object-fit: cover;
+      display: block;
+      background: var(--bg-secondary);
+    }
+
+    /* Konten teks di bawah gambar */
+    .category-card-big .cat-body {
+      padding: 32px;
+    }
+
+    .category-card-big .cat-icon {
+      font-size: 2.5rem;        /* <-- Ubah ukuran ikon/emoji kategori */
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .category-card-big .cat-title {
+      font-size: var(--fs-3xl);
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .category-card-big .cat-desc {
+      font-size: var(--fs-base);
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.7;
+    }
+
+    /* Daftar sub-kategori / item di dalam kategori */
+    .cat-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .cat-tag {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: var(--fs-xs);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 50px;
+    }
+
+    /* Garis dekoratif di sisi kiri kartu (warna berbeda tiap kategori) */
+    .category-card-big.cat-game {
+      border-top: 3px solid var(--accent-cyan);
+    }
+
+    .category-card-big.cat-topup {
+      border-top: 3px solid var(--accent-orange);
+    }
+
+    /* ============================================================
+       [SUB-KATEGORI GRID]
+       Grid kartu kecil sub-kategori di bawah kartu besar.
+       ============================================================ */
+    .subcat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);    /* <-- 4 kolom sub-kategori */
+      gap: 16px;
+    }
+
+    .subcat-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px 16px;
+      text-align: center;
+      transition: var(--transition);
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+    }
+
+    .subcat-card:hover {
+      border-color: rgba(0, 212, 255, 0.3);
+      background-color: rgba(0, 212, 255, 0.04);
+    }
+
+    .subcat-card .subcat-icon {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .subcat-card .subcat-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: var(--fs-base);
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .subcat-card .subcat-count {
+      font-size: var(--fs-xs);
+      color: var(--text-dark);
+    }
+
+    /* ============================================================
+       [INFO BANNER BAWAH]
+       Banner info tambahan di bawah semua kategori.
+       ============================================================ */
+    .info-banner {
+      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .info-banner h3 {
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .info-banner p {
+      max-width: 480px;
+      margin: 0 auto 24px;
+    }
+
+    @media (max-width: 768px) {
+      .subcat-grid { grid-template-columns: repeat(2, 1fr); }
+      .cat-banner  { height: 180px; }
+      .cat-body    { padding: 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .subcat-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       [NAVBAR] Sama di semua halaman.
+       "active" ada di link "Kategori".
+       ============================================================ -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="navbar-logo">GAME<span>ZONE</span></a>
+      <ul class="navbar-menu">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="kategori.html" class="active">Kategori</a></li>
+        <li><a href="produk.html">Produk & Top-Up</a></li>
+        <li><a href="about.html">Tentang Kami</a></li>
+        <li><a href="produk.html" class="navbar-cta">Top-Up Sekarang</a></li>
+      </ul>
+    </div>
+  </nav>
+  <!-- [/NAVBAR] -->
+
+
+  <!-- ============================================================
+       [PAGE HEADER] Judul halaman kategori.
+       Ubah teks judul dan deskripsi di sini.
+       ============================================================ -->
+  <div class="page-header">
+    <div class="container">
+      <!-- Breadcrumb navigasi -->
+      <p class="breadcrumb"><a href="index.html">Beranda</a> › Kategori</p>
+      <h1>Kategori <span style="color: var(--accent-cyan)">Produk</span></h1>
+      <p>Jelajahi semua kategori game retail dan layanan top-up yang tersedia di GameZONE.</p>
+    </div>
+  </div>
+  <!-- [/PAGE HEADER] -->
+
+
+  <!-- ============================================================
+       [DUA KARTU KATEGORI BESAR]
+       Kategori 1: Retail Game
+       Kategori 2: Jasa Top-Up
+       ============================================================ -->
+  <section class="section-padding">
+    <div class="container">
+
+      <div class="categories-grid">
+
+        <!-- ============================================================
+             KARTU KATEGORI 1: RETAIL GAME
+             Ubah gambar, judul, deskripsi, tag, dan link tombol.
+             ============================================================ -->
+        <div class="category-card-big cat-game">
+
+          <!-- Ganti URL gambar dengan banner kategori game asli -->
+          <img
+            class="cat-banner"
+            src="https://placehold.co/600x240/0a1628/00d4ff?text=Retail+Game+%E2%80%94+PC+%26+Konsol"
+            alt="Banner Kategori Retail Game"
+          />
+
+          <div class="cat-body">
+            <span class="cat-icon">🕹️</span>
+            <h2 class="cat-title">Kategori Retail Game</h2>
+
+            <!-- Deskripsi kategori — ubah teks ini -->
+            <p class="cat-desc">
+              Koleksi lengkap game original untuk semua platform. Dari game PC indie
+              hingga judul AAA terbaru untuk PlayStation, Xbox, dan Nintendo.
+              Semua produk resmi dan bergaransi asli.
+            </p>
+
+            <!-- Tag sub-kategori — tambah/hapus sesuai kebutuhan -->
+            <div class="cat-tags">
+              <span class="cat-tag">Game PC</span>
+              <span class="cat-tag">PlayStation 5</span>
+              <span class="cat-tag">Xbox Series</span>
+              <span class="cat-tag">Nintendo Switch</span>
+              <span class="cat-tag">Game Indie</span>
+              <span class="cat-tag">Game AAA</span>
+              <span class="cat-tag">Pre-Order</span>
+            </div>
+
+            <!-- Tombol ke halaman produk — ubah href jika perlu -->
+            <a href="produk.html" class="btn-primary">Lihat Semua Game →</a>
+          </div>
+
+        </div>
+        <!-- [/KARTU KATEGORI 1] -->
+
+
+        <!-- ============================================================
+             KARTU KATEGORI 2: JASA TOP-UP
+             Ubah gambar, judul, deskripsi, tag, dan link tombol.
+             ============================================================ -->
+        <div class="category-card-big cat-topup">
+
+          <!-- Ganti URL gambar dengan banner kategori top-up asli -->
+          <img
+            class="cat-banner"
+            src="https://placehold.co/600x240/0a1628/ff6b35?text=Jasa+Top-Up+%E2%80%94+Diamond+%26+UC"
+            alt="Banner Kategori Jasa Top-Up"
+          />
+
+          <div class="cat-body">
+            <span class="cat-icon">⚡</span>
+            <h2 class="cat-title">Kategori Jasa Top-Up</h2>
+
+            <!-- Deskripsi kategori top-up — ubah teks ini -->
+            <p class="cat-desc">
+              Isi ulang currency in-game untuk semua game mobile dan PC populer.
+              Diamond Mobile Legends, Genesis Crystal Genshin Impact, UC PUBG Mobile,
+              dan banyak lagi. Proses otomatis, instan, dan aman 100%.
+            </p>
+
+            <!-- Tag game yang didukung -->
+            <div class="cat-tags">
+              <span class="cat-tag" style="border-color:rgba(255,107,53,0.3); color: var(--accent-orange);">Mobile Legends</span>
+              <span class="cat-tag" style="border-color:rgba(255,107,53,0.3); color: var(--accent-orange);">Genshin Impact</span>
+              <span class="cat-tag" style="border-color:rgba(255,107,53,0.3); color: var(--accent-orange);">PUBG Mobile</span>
+              <span class="cat-tag" style="border-color:rgba(255,107,53,0.3); color: var(--accent-orange);">Free Fire</span>
+              <span class="cat-tag" style="border-color:rgba(255,107,53,0.3); color: var(--accent-orange);">Valorant</span>
+              <span class="cat-tag" style="border-color:rgba(255,107,53,0.3); color: var(--accent-orange);">Honkai Star Rail</span>
+            </div>
+
+            <!-- Tombol ke halaman produk (bagian top-up) -->
+            <a href="produk.html" class="btn-orange">Lihat Semua Top-Up →</a>
+          </div>
+
+        </div>
+        <!-- [/KARTU KATEGORI 2] -->
+
+      </div>
+      <!-- [/CATEGORIES GRID] -->
+
+    </div>
+  </section>
+  <!-- [/DUA KARTU KATEGORI BESAR] -->
+
+
+  <!-- ============================================================
+       [SUB-KATEGORI GAME]
+       Grid kecil sub-kategori platform game.
+       Tambah/hapus kartu .subcat-card sesuai kebutuhan.
+       ============================================================ -->
+  <section class="section-padding-sm" style="background-color: var(--bg-secondary); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+    <div class="container">
+
+      <div class="section-header" style="margin-bottom:32px;">
+        <span class="eyebrow">Jelajahi per Platform</span>
+        <h2>Pilih <span>Platform</span> Game</h2>
+      </div>
+
+      <div class="subcat-grid">
+
+        <!-- SUB-KATEGORI 1: Game PC -->
+        <a href="produk.html" class="subcat-card">
+          <span class="subcat-icon">🖥️</span>
+          <p class="subcat-name">Game PC</p>
+          <p class="subcat-count">200+ Judul</p>
+        </a>
+
+        <!-- SUB-KATEGORI 2: PlayStation -->
+        <a href="produk.html" class="subcat-card">
+          <span class="subcat-icon">🎮</span>
+          <p class="subcat-name">PlayStation</p>
+          <p class="subcat-count">150+ Judul</p>
+        </a>
+
+        <!-- SUB-KATEGORI 3: Xbox -->
+        <a href="produk.html" class="subcat-card">
+          <span class="subcat-icon">🟩</span>
+          <p class="subcat-name">Xbox</p>
+          <p class="subcat-count">80+ Judul</p>
+        </a>
+
+        <!-- SUB-KATEGORI 4: Nintendo Switch -->
+        <a href="produk.html" class="subcat-card">
+          <span class="subcat-icon">🕹️</span>
+          <p class="subcat-name">Nintendo Switch</p>
+          <p class="subcat-count">60+ Judul</p>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+  <!-- [/SUB-KATEGORI GAME] -->
+
+
+  <!-- ============================================================
+       [INFO BANNER BAWAH]
+       Banner ajakan bertindak di bagian bawah halaman kategori.
+       ============================================================ -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="info-banner">
+        <span class="badge badge-cyan" style="margin-bottom:16px;">💡 Info Pembelian</span>
+        <h3>Tidak Yakin Mau Beli Apa?</h3>
+        <p>
+          Hubungi tim kami via WhatsApp — kami siap merekomendasikan game atau
+          paket top-up yang paling sesuai dengan kebutuhan dan bujet kamu.
+        </p>
+        <!-- Ubah href ke nomor WhatsApp yang benar -->
+        <a href="https://wa.me/6281234567890" class="btn-primary">Chat WhatsApp Sekarang</a>
+      </div>
+    </div>
+  </section>
+  <!-- [/INFO BANNER BAWAH] -->
+
+
+  <!-- ============================================================
+       [FOOTER]
+       ============================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="logo">GAME<span>ZONE</span></span>
+          <p>Toko retail game dan jasa top-up terpercaya. Melayani pelanggan sejak 2020.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigasi</h4>
+          <ul>
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="kategori.html">Kategori</a></li>
+            <li><a href="produk.html">Produk & Top-Up</a></li>
+            <li><a href="about.html">Tentang Kami</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Produk</h4>
+          <ul>
+            <li><a href="produk.html">Game PC</a></li>
+            <li><a href="produk.html">Game Konsol</a></li>
+            <li><a href="produk.html">Mobile Legends</a></li>
+            <li><a href="produk.html">Genshin Impact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Kontak</h4>
+          <ul>
+            <li><a href="https://wa.me/6281234567890">WhatsApp</a></li>
+            <li><a href="mailto:cs@gamezone.id">cs@gamezone.id</a></li>
+            <li><a href="about.html">Lokasi Kami</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 GameZONE. Semua hak dilindungi. | Retail Game & Jasa Top-Up</p>
+      </div>
+    </div>
+  </footer>
+  <!-- [/FOOTER] -->
+
+</body>
+</html>

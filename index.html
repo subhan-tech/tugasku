@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <!-- ============================================================
+       [HEAD] Meta, Judul Halaman, dan Link ke CSS
+       Ganti isi <title> untuk mengubah nama di tab browser.
+       ============================================================ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GameZONE — Retail Game & Jasa Top-Up</title>
+  <meta name="description" content="Toko game terpercaya: retail game PC, konsol, dan jasa top-up tercepat." />
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- ============================================================
+       [STYLE KHUSUS HALAMAN INI]
+       Style di bawah hanya berlaku untuk index.html.
+       Style global ada di style.css
+       ============================================================ -->
+  <style>
+
+    /* ============================================================
+       [HERO SECTION]
+       Banner utama dengan efek scanline dan gradient overlay.
+       Ubah background-color untuk mengganti warna hero.
+       ============================================================ */
+    .hero {
+      position: relative;
+      min-height: 520px;           /* <-- Ubah tinggi hero */
+      display: flex;
+      align-items: center;
+      background: linear-gradient(135deg, #070b14 0%, #0a1628 50%, #071020 100%);
+      overflow: hidden;
+    }
+
+    /* Efek scanline (garis horizontal tipis di background) */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0, 212, 255, 0.015) 3px,
+        rgba(0, 212, 255, 0.015) 4px
+      );
+      pointer-events: none;
+    }
+
+    /* Lingkaran cahaya di sudut kanan hero */
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -120px;
+      top: -120px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero .container {
+      position: relative;
+      z-index: 1;
+      padding: 80px 24px;
+    }
+
+    /* Label kecil di atas judul hero */
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-cyan);
+      border: 1px solid rgba(0, 212, 255, 0.4);
+      padding: 5px 14px;
+      border-radius: 50px;
+      margin-bottom: 24px;
+    }
+
+    /* Judul besar hero */
+    .hero h1 {
+      color: #ffffff;
+      max-width: 680px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 .highlight {
+      /* Kata yang diberi warna aksen di judul hero */
+      color: var(--accent-cyan);
+      text-shadow: 0 0 40px rgba(0, 212, 255, 0.5);
+    }
+
+    .hero p {
+      max-width: 520px;
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+    }
+
+    /* Wrapper dua tombol di hero */
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Kotak placeholder "Banner Promo Game & Top-Up" */
+    .banner-placeholder {
+      background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+      border: 2px dashed rgba(0, 212, 255, 0.3);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      text-align: center;
+      margin: 48px 0 0;
+    }
+
+    .banner-placeholder p {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: var(--fs-xl);
+      color: rgba(0, 212, 255, 0.5);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ============================================================
+       [STATS BAR]
+       Bar angka statistik di bawah hero.
+       ============================================================ */
+    .stats-bar {
+      background-color: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      padding: 28px 0;
+    }
+
+    .stats-bar .container {
+      display: flex;
+      justify-content: space-around;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-item .stat-number {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: var(--fs-3xl);
+      font-weight: 700;
+      color: var(--accent-cyan);
+      display: block;
+    }
+
+    .stat-item .stat-label {
+      font-size: var(--fs-sm);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* ============================================================
+       [GAME UNGGULAN / FEATURED GAMES]
+       Kartu game yang ditampilkan di homepage.
+       ============================================================ */
+    .featured-section {
+      background-color: var(--bg-primary);
+    }
+
+    /* Override warna background kartu featured */
+    .featured-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .featured-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0, 212, 255, 0.4);
+      box-shadow: 0 12px 40px rgba(0, 212, 255, 0.12);
+    }
+
+    .featured-card img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      background: var(--bg-secondary);
+    }
+
+    .featured-card .card-body {
+      padding: 16px;
+    }
+
+    .featured-card .card-genre {
+      /* Label genre game kecil */
+      font-size: var(--fs-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-cyan);
+      margin-bottom: 6px;
+    }
+
+    .featured-card .card-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: var(--fs-xl);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .featured-card .card-price {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: var(--fs-2xl);
+      color: var(--accent-cyan);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .featured-card .card-platform {
+      /* Tag platform: PC, PS5, Xbox dll */
+      display: inline-block;
+      font-size: var(--fs-xs);
+      color: var(--text-dark);
+      border: 1px solid var(--border-color);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-right: 4px;
+    }
+
+    /* ============================================================
+       [KEUNGGULAN / WHY US SECTION]
+       4 kotak "kenapa belanja di sini".
+       ============================================================ */
+    .why-section {
+      background-color: var(--bg-secondary);
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);  /* <-- Ubah jumlah kolom */
+      gap: 24px;
+    }
+
+    .why-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .why-card:hover {
+      border-color: rgba(0, 212, 255, 0.3);
+      transform: translateY(-4px);
+    }
+
+    .why-card .why-icon {
+      /* Kotak ikon di atas teks keunggulan */
+      font-size: 2.5rem;              /* <-- Ukuran emoji/ikon */
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .why-card h4 {
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      font-size: var(--fs-lg);
+    }
+
+    .why-card p {
+      font-size: var(--fs-sm);
+    }
+
+    /* ============================================================
+       [TOP-UP PROMO BANNER]
+       Banner promosi top-up dengan background cerah.
+       ============================================================ */
+    .topup-promo {
+      background: linear-gradient(135deg, #0a1628, #071628);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      border-radius: var(--radius-lg);
+      padding: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin: 0 0 80px;
+    }
+
+    .topup-promo .promo-text h3 {
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .topup-promo .promo-text p {
+      max-width: 400px;
+    }
+
+    @media (max-width: 768px) {
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+      .topup-promo { padding: 32px 24px; flex-direction: column; }
+    }
+
+    @media (max-width: 480px) {
+      .why-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       [NAVBAR] Navigasi atas yang tampil di semua halaman.
+       Untuk mengubah menu, edit teks dan href di <a> di bawah.
+       ============================================================ -->
+  <nav class="navbar">
+    <div class="container">
+
+      <!-- LOGO: Ubah teks "GAME" dan "ZONE" di sini -->
+      <a href="index.html" class="navbar-logo">GAME<span>ZONE</span></a>
+
+      <!-- MENU NAVIGASI: Tambah/hapus <li> untuk menu baru -->
+      <ul class="navbar-menu">
+        <li><a href="index.html" class="active">Beranda</a></li>
+        <li><a href="kategori.html">Kategori</a></li>
+        <li><a href="produk.html">Produk & Top-Up</a></li>
+        <li><a href="about.html">Tentang Kami</a></li>
+        <!-- Tombol CTA di ujung kanan navbar -->
+        <li><a href="produk.html" class="navbar-cta">Top-Up Sekarang</a></li>
+      </ul>
+
+    </div>
+  </nav>
+  <!-- [/NAVBAR] -->
+
+
+  <!-- ============================================================
+       [HERO SECTION] Banner utama halaman beranda.
+       Ubah teks judul, paragraf, dan teks tombol di sini.
+       ============================================================ -->
+  <section class="hero">
+    <div class="container">
+
+      <!-- Label kecil di atas judul -->
+      <span class="hero-eyebrow">🎮 Toko Game Terpercaya #1 di Jambi</span>
+
+      <!-- JUDUL UTAMA HERO: Ubah teks di sini -->
+      <h1>
+        Retail Game &<br>
+        Jasa <span class="highlight">Top-Up</span><br>
+        Tercepat & Termurah
+      </h1>
+
+      <!-- DESKRIPSI HERO: Ubah teks di sini -->
+      <p>
+        Temukan ribuan judul game PC & konsol terbaru, plus layanan
+        top-up diamond, UC, dan koin untuk semua game favoritmu.
+        Proses instan, harga bersaing, terpercaya.
+      </p>
+
+      <!-- TOMBOL CTA: Ubah teks dan href sesuai kebutuhan -->
+      <div class="hero-cta">
+        <a href="produk.html" class="btn-primary">🛒 Lihat Produk</a>
+        <a href="produk.html" class="btn-secondary">⚡ Top-Up Sekarang</a>
+      </div>
+
+      <!-- ============================================================
+           PLACEHOLDER BANNER PROMO
+           Ganti bagian ini dengan gambar banner asli Anda:
+           <img src="img/banner-promo.jpg" alt="Banner Promo" />
+           ============================================================ -->
+      <div class="banner-placeholder">
+        <p>📢 Banner Promo Game & Top-Up</p>
+        <p style="font-size:0.8rem; margin-top:8px; color: rgba(0,212,255,0.3);">
+          Ganti dengan gambar banner promosi Anda — ukuran rekomendasi: 1200×280px
+        </p>
+      </div>
+      <!-- [/PLACEHOLDER BANNER PROMO] -->
+
+    </div>
+  </section>
+  <!-- [/HERO SECTION] -->
+
+
+  <!-- ============================================================
+       [STATS BAR] Angka statistik toko (ubah angka di sini).
+       ============================================================ -->
+  <div class="stats-bar">
+    <div class="container">
+
+      <!-- STAT 1: Jumlah produk -->
+      <div class="stat-item">
+        <span class="stat-number">500+</span>
+        <span class="stat-label">Judul Game</span>
+      </div>
+
+      <!-- STAT 2: Jumlah pelanggan -->
+      <div class="stat-item">
+        <span class="stat-number">10.000+</span>
+        <span class="stat-label">Pelanggan Aktif</span>
+      </div>
+
+      <!-- STAT 3: Game top-up didukung -->
+      <div class="stat-item">
+        <span class="stat-number">50+</span>
+        <span class="stat-label">Game Top-Up</span>
+      </div>
+
+      <!-- STAT 4: Rating atau tahun berdiri -->
+      <div class="stat-item">
+        <span class="stat-number">4.9★</span>
+        <span class="stat-label">Rating Kepuasan</span>
+      </div>
+
+    </div>
+  </div>
+  <!-- [/STATS BAR] -->
+
+
+  <!-- ============================================================
+       [FEATURED GAMES] Game unggulan / terbaru di homepage.
+       Tambah/kurangi <div class="featured-card"> sesuai kebutuhan.
+       ============================================================ -->
+  <section class="section-padding featured-section">
+    <div class="container">
+
+      <!-- Judul seksi -->
+      <div class="section-header">
+        <span class="eyebrow">Pilihan Editor</span>
+        <h2>Game <span>Unggulan</span> Bulan Ini</h2>
+        <p>Koleksi terpilih game terbaru dan terlaris, tersedia untuk PC dan konsol.</p>
+      </div>
+
+      <!-- Grid 4 kartu game — ubah konten setiap kartu -->
+      <div class="products-grid">
+
+        <!-- ============================================================
+             KARTU GAME 1
+             Ganti src gambar, nama game, genre, platform, dan harga.
+             ============================================================ -->
+        <div class="featured-card">
+          <!-- Ganti URL gambar placeholder dengan gambar game asli -->
+          <img src="https://placehold.co/400x225/1a2340/00d4ff?text=Game+PC+1" alt="Game PC 1" />
+          <div class="card-body">
+            <p class="card-genre">Action RPG · PC</p>
+            <h3 class="card-title">Nama Game PC 1</h3>
+            <span class="card-platform">PC</span>
+            <span class="card-platform">Steam</span>
+            <p class="card-price" style="margin-top:12px;">Rp 249.000</p>
+            <a href="produk.html" class="btn-primary" style="width:100%; text-align:center; padding:10px;">Beli Sekarang</a>
+          </div>
+        </div>
+
+        <!-- KARTU GAME 2 -->
+        <div class="featured-card">
+          <img src="https://placehold.co/400x225/1a2340/ff6b35?text=Game+PC+2" alt="Game PC 2" />
+          <div class="card-body">
+            <p class="card-genre">FPS · PC</p>
+            <h3 class="card-title">Nama Game PC 2</h3>
+            <span class="card-platform">PC</span>
+            <span class="card-platform">Steam</span>
+            <p class="card-price" style="margin-top:12px;">
+              <span class="original-price">Rp 350.000</span>Rp 280.000
+            </p>
+            <a href="produk.html" class="btn-primary" style="width:100%; text-align:center; padding:10px;">Beli Sekarang</a>
+          </div>
+        </div>
+
+        <!-- KARTU GAME 3 -->
+        <div class="featured-card">
+          <img src="https://placehold.co/400x225/1a2340/00d4ff?text=Game+PS5" alt="Game PS5" />
+          <div class="card-body">
+            <p class="card-genre">Adventure · PS5</p>
+            <h3 class="card-title">Nama Game Konsol 1</h3>
+            <span class="card-platform">PS5</span>
+            <p class="card-price" style="margin-top:12px;">Rp 899.000</p>
+            <a href="produk.html" class="btn-primary" style="width:100%; text-align:center; padding:10px;">Beli Sekarang</a>
+          </div>
+        </div>
+
+        <!-- KARTU GAME 4 -->
+        <div class="featured-card">
+          <img src="https://placehold.co/400x225/1a2340/ff6b35?text=Game+Xbox" alt="Game Xbox" />
+          <div class="card-body">
+            <p class="card-genre">Sports · Xbox</p>
+            <h3 class="card-title">Nama Game Konsol 2</h3>
+            <span class="card-platform">Xbox</span>
+            <p class="card-price" style="margin-top:12px;">Rp 799.000</p>
+            <a href="produk.html" class="btn-primary" style="width:100%; text-align:center; padding:10px;">Beli Sekarang</a>
+          </div>
+        </div>
+
+      </div>
+      <!-- [/GRID GAME] -->
+
+      <!-- Tombol "Lihat Semua" -->
+      <div class="text-center mt-32">
+        <a href="produk.html" class="btn-secondary">Lihat Semua Produk →</a>
+      </div>
+
+    </div>
+  </section>
+  <!-- [/FEATURED GAMES] -->
+
+
+  <!-- ============================================================
+       [TOP-UP PROMO BANNER]
+       Banner promosi untuk jasa top-up.
+       Ubah teks dan href tombol sesuai kebutuhan.
+       ============================================================ -->
+  <div class="container">
+    <div class="topup-promo">
+      <div class="promo-text">
+        <!-- Teks promo banner top-up -->
+        <span class="badge badge-orange" style="margin-bottom:12px;">⚡ PROMO SPESIAL</span>
+        <h3>Top-Up Lebih Hemat Sampai 20%!</h3>
+        <p>Isi ulang diamond, UC, dan koin game favorit kamu dengan harga terbaik.
+           Proses otomatis, langsung masuk ke akun dalam hitungan detik.</p>
+      </div>
+      <a href="produk.html" class="btn-orange">Mulai Top-Up →</a>
+    </div>
+  </div>
+  <!-- [/TOP-UP PROMO BANNER] -->
+
+
+  <!-- ============================================================
+       [WHY US] Keunggulan berbelanja di toko ini.
+       Ubah ikon (emoji), judul, dan deskripsi tiap kartu.
+       ============================================================ -->
+  <section class="section-padding why-section">
+    <div class="container">
+
+      <div class="section-header">
+        <span class="eyebrow">Keunggulan Kami</span>
+        <h2>Kenapa Pilih <span>GameZONE</span>?</h2>
+        <p>Kami hadir untuk memberikan pengalaman belanja game dan top-up yang mudah, cepat, dan terpercaya.</p>
+      </div>
+
+      <div class="why-grid">
+
+        <!-- KARTU KEUNGGULAN 1 — Ubah ikon, judul, dan deskripsi -->
+        <div class="why-card">
+          <span class="why-icon">⚡</span>
+          <h4>Top-Up Instan</h4>
+          <p>Proses top-up otomatis kurang dari 5 menit setelah pembayaran dikonfirmasi.</p>
+        </div>
+
+        <!-- KARTU KEUNGGULAN 2 -->
+        <div class="why-card">
+          <span class="why-icon">💰</span>
+          <h4>Harga Terbaik</h4>
+          <p>Harga game dan top-up dijamin kompetitif. Ada program harga khusus untuk member setia.</p>
+        </div>
+
+        <!-- KARTU KEUNGGULAN 3 -->
+        <div class="why-card">
+          <span class="why-icon">🔒</span>
+          <h4>Transaksi Aman</h4>
+          <p>Semua transaksi terenkripsi. Jaminan uang kembali jika ada kendala pesanan.</p>
+        </div>
+
+        <!-- KARTU KEUNGGULAN 4 -->
+        <div class="why-card">
+          <span class="why-icon">💬</span>
+          <h4>CS 24/7</h4>
+          <p>Customer service siap membantu 24 jam via WhatsApp untuk semua pertanyaan dan kendala.</p>
+        </div>
+
+      </div>
+      <!-- [/WHY GRID] -->
+
+    </div>
+  </section>
+  <!-- [/WHY US] -->
+
+
+  <!-- ============================================================
+       [FOOTER] Bagian bawah halaman. Isi kontak dan link.
+       ============================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Kolom 1: Brand & Deskripsi -->
+        <div class="footer-brand">
+          <span class="logo">GAME<span>ZONE</span></span>
+          <!-- Deskripsi singkat usaha -->
+          <p>Toko retail game dan jasa top-up terpercaya. Melayani pelanggan sejak 2020 dengan ribuan transaksi sukses.</p>
+        </div>
+
+        <!-- Kolom 2: Navigasi Cepat -->
+        <div class="footer-col">
+          <h4>Navigasi</h4>
+          <ul>
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="kategori.html">Kategori</a></li>
+            <li><a href="produk.html">Produk & Top-Up</a></li>
+            <li><a href="about.html">Tentang Kami</a></li>
+          </ul>
+        </div>
+
+        <!-- Kolom 3: Kategori Produk -->
+        <div class="footer-col">
+          <h4>Produk</h4>
+          <ul>
+            <li><a href="produk.html">Game PC</a></li>
+            <li><a href="produk.html">Game Konsol</a></li>
+            <li><a href="produk.html">Mobile Legends</a></li>
+            <li><a href="produk.html">Genshin Impact</a></li>
+          </ul>
+        </div>
+
+        <!-- Kolom 4: Kontak -->
+        <div class="footer-col">
+          <h4>Kontak</h4>
+          <ul>
+            <!-- Ubah nomor dan alamat kontak di sini -->
+            <li><a href="https://wa.me/6281234567890">WhatsApp</a></li>
+            <li><a href="mailto:cs@gamezone.id">cs@gamezone.id</a></li>
+            <li><a href="about.html">Lokasi Kami</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Hak cipta di bawah footer -->
+      <div class="footer-bottom">
+        <p>© 2024 GameZONE. Semua hak dilindungi. | Retail Game & Jasa Top-Up</p>
+      </div>
+    </div>
+  </footer>
+  <!-- [/FOOTER] -->
+
+</body>
+</html>

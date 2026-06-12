@@ -1,0 +1,620 @@
+/* ============================================================
+   GAMEZONE STORE - style.css
+   File CSS utama yang digunakan oleh semua halaman HTML.
+   Ubah nilai di sini untuk mengganti warna, font, dan layout
+   secara global di seluruh website.
+   ============================================================ */
+
+/* ============================================================
+   [SECTION: GOOGLE FONTS IMPORT]
+   Font Rajdhani untuk judul (gaming feel)
+   Font Inter untuk teks biasa
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+/* ============================================================
+   [SECTION: CSS VARIABLES / TOKEN WARNA & UKURAN]
+   Ganti nilai di sini untuk mengubah tema warna secara global.
+   ============================================================ */
+:root {
+  /* --- Warna Latar Belakang --- */
+  --bg-primary:    #0a0e1a;   /* Latar utama (sangat gelap) */
+  --bg-secondary:  #151c2e;   /* Latar kartu / section */
+  --bg-card:       #1a2340;   /* Latar kartu produk */
+  --bg-nav:        #070b14;   /* Latar navbar */
+
+  /* --- Warna Aksen --- */
+  --accent-cyan:   #00d4ff;   /* Warna aksen utama (biru-cyan) */
+  --accent-orange: #ff6b35;   /* Warna aksen sekunder (oranye) */
+  --accent-glow:   rgba(0, 212, 255, 0.25); /* Efek glow cyan */
+
+  /* --- Warna Teks --- */
+  --text-primary:  #e8eaf6;   /* Teks utama (putih kebiruan) */
+  --text-muted:    #8892b0;   /* Teks sekunder (abu-abu) */
+  --text-dark:     #4a5568;   /* Teks lebih redup */
+
+  /* --- Border & Divider --- */
+  --border-color:  #1e2a45;   /* Warna garis pembatas */
+  --border-glow:   rgba(0, 212, 255, 0.4); /* Border dengan efek glow */
+
+  /* --- Ukuran Font (Type Scale) --- */
+  --fs-xs:    0.75rem;   /* 12px */
+  --fs-sm:    0.875rem;  /* 14px */
+  --fs-base:  1rem;      /* 16px */
+  --fs-lg:    1.125rem;  /* 18px */
+  --fs-xl:    1.25rem;   /* 20px */
+  --fs-2xl:   1.5rem;    /* 24px */
+  --fs-3xl:   2rem;      /* 32px */
+  --fs-4xl:   2.5rem;    /* 40px */
+  --fs-hero:  3.5rem;    /* 56px - untuk judul hero besar */
+
+  /* --- Border Radius --- */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  16px;
+
+  /* --- Transisi --- */
+  --transition: all 0.25s ease;
+}
+
+/* ============================================================
+   [SECTION: RESET & BASE STYLES]
+   Pengaturan dasar untuk semua elemen HTML.
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+a:hover {
+  color: #ffffff;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ============================================================
+   [SECTION: TYPOGRAPHY - HEADING & TEKS]
+   Gaya untuk judul h1-h4 dan paragraf.
+   ============================================================ */
+h1, h2, h3, h4 {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+}
+
+h1 { font-size: var(--fs-hero); }
+h2 { font-size: var(--fs-3xl); }
+h3 { font-size: var(--fs-2xl); }
+h4 { font-size: var(--fs-xl); }
+
+p {
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ============================================================
+   [SECTION: LAYOUT - CONTAINER & WRAPPER]
+   Kontainer utama yang membatasi lebar konten.
+   Ubah max-width untuk mengatur lebar halaman.
+   ============================================================ */
+.container {
+  width: 100%;
+  max-width: 1200px;  /* <-- UBAH INI untuk lebar maksimum konten */
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ============================================================
+   [SECTION: NAVBAR / NAVIGASI ATAS]
+   Navbar tetap di atas layar saat scroll.
+   ============================================================ */
+.navbar {
+  background-color: var(--bg-nav);
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;       /* <-- Navbar mengikuti scroll */
+  top: 0;
+  z-index: 1000;
+  padding: 0;
+}
+
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;           /* <-- UBAH INI untuk tinggi navbar */
+}
+
+/* --- Logo / Nama Toko di Navbar --- */
+.navbar-logo {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--accent-cyan);
+  text-shadow: 0 0 20px var(--accent-glow);
+  letter-spacing: 0.05em;
+}
+
+.navbar-logo span {
+  color: var(--accent-orange);  /* Warna huruf "ZONE" pada logo */
+}
+
+/* --- Menu Navigasi --- */
+.navbar-menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navbar-menu li a {
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: var(--fs-sm);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+
+.navbar-menu li a:hover,
+.navbar-menu li a.active {
+  color: var(--accent-cyan);
+  background-color: rgba(0, 212, 255, 0.08);
+}
+
+/* --- Tombol CTA di Navbar --- */
+.navbar-cta {
+  background: linear-gradient(135deg, var(--accent-cyan), #0099cc);
+  color: #000 !important;         /* Teks hitam agar kontras */
+  font-weight: 700 !important;
+  padding: 8px 20px !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+.navbar-cta:hover {
+  background: linear-gradient(135deg, #33ddff, var(--accent-cyan)) !important;
+  color: #000 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+/* ============================================================
+   [SECTION: TOMBOL / BUTTON]
+   Berbagai varian tombol yang digunakan di seluruh halaman.
+   ============================================================ */
+
+/* Tombol Utama (Cyan) */
+.btn-primary {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--accent-cyan), #0099cc);
+  color: #000;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: var(--fs-base);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 12px 28px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px var(--accent-glow);
+  color: #000;
+}
+
+/* Tombol Sekunder (Outline Cyan) */
+.btn-secondary {
+  display: inline-block;
+  background: transparent;
+  color: var(--accent-cyan);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: var(--fs-base);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 11px 28px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent-cyan);
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(0, 212, 255, 0.1);
+  color: var(--accent-cyan);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* Tombol Oranye */
+.btn-orange {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--accent-orange), #cc4400);
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: var(--fs-base);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 12px 28px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.btn-orange:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(255, 107, 53, 0.35);
+  color: #fff;
+}
+
+/* ============================================================
+   [SECTION: BADGE / LABEL KECIL]
+   Label kecil seperti "HOT", "BARU", "DISKON"
+   ============================================================ */
+.badge {
+  display: inline-block;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 50px;
+}
+
+.badge-cyan {
+  background-color: rgba(0, 212, 255, 0.15);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+.badge-orange {
+  background-color: rgba(255, 107, 53, 0.15);
+  color: var(--accent-orange);
+  border: 1px solid rgba(255, 107, 53, 0.3);
+}
+
+/* ============================================================
+   [SECTION: SECTION HEADING - JUDUL PER BAGIAN]
+   Judul dan deskripsi untuk setiap seksi konten.
+   ============================================================ */
+.section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.section-header .eyebrow {
+  /* "eyebrow" = teks kecil di atas judul utama */
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.section-header h2 {
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.section-header h2 span {
+  color: var(--accent-cyan);
+}
+
+.section-header p {
+  max-width: 560px;
+  margin: 0 auto;
+  font-size: var(--fs-lg);
+}
+
+/* ============================================================
+   [SECTION: KARTU PRODUK / PRODUCT CARD]
+   Kartu yang digunakan untuk menampilkan game dan top-up.
+   ============================================================ */
+.product-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: var(--transition);
+  position: relative;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--border-glow);
+  box-shadow: 0 12px 40px rgba(0, 212, 255, 0.15);
+}
+
+.product-card .card-image {
+  width: 100%;
+  aspect-ratio: 16/9;    /* <-- UBAH RASIO GAMBAR DI SINI */
+  object-fit: cover;
+  background-color: var(--bg-secondary);
+}
+
+.product-card .card-body {
+  padding: 16px;         /* <-- UBAH PADDING KONTEN KARTU */
+}
+
+.product-card .card-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.product-card .card-subtitle {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.product-card .card-price {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  color: var(--accent-cyan);
+  margin-bottom: 14px;
+}
+
+.product-card .card-price .original-price {
+  /* Harga coret / harga asli sebelum diskon */
+  font-size: var(--fs-sm);
+  color: var(--text-dark);
+  text-decoration: line-through;
+  margin-right: 8px;
+}
+
+/* ============================================================
+   [SECTION: GRID LAYOUT - KARTU PRODUK]
+   Grid yang menampilkan banyak kartu secara berdampingan.
+   Ubah "repeat(X, 1fr)" untuk mengatur jumlah kolom.
+   ============================================================ */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);  /* 4 kolom di desktop */
+  gap: 24px;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  /* 2 kolom untuk kategori */
+  gap: 32px;
+}
+
+.topup-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  /* 3 kolom untuk top-up */
+  gap: 24px;
+}
+
+/* ============================================================
+   [SECTION: DIVIDER / GARIS PEMISAH SEKSI]
+   ============================================================ */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+  margin: 80px 0;
+}
+
+/* ============================================================
+   [SECTION: PADDING SEKSI]
+   Ubah nilai padding di sini untuk mengatur jarak antar seksi.
+   ============================================================ */
+.section-padding {
+  padding: 80px 0;       /* <-- Jarak atas-bawah tiap seksi */
+}
+
+.section-padding-sm {
+  padding: 48px 0;
+}
+
+/* ============================================================
+   [SECTION: FOOTER]
+   Bagian paling bawah halaman.
+   ============================================================ */
+.footer {
+  background-color: var(--bg-nav);
+  border-top: 1px solid var(--border-color);
+  padding: 48px 0 24px;
+  margin-top: 80px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;  /* Layout 4 kolom footer */
+  gap: 48px;
+  margin-bottom: 48px;
+}
+
+.footer-brand .logo {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  color: var(--accent-cyan);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.footer-brand .logo span {
+  color: var(--accent-orange);
+}
+
+.footer-brand p {
+  font-size: var(--fs-sm);
+  max-width: 280px;
+}
+
+.footer-col h4 {
+  font-size: var(--fs-base);
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  letter-spacing: 0.05em;
+}
+
+.footer-col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-col ul li a {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.footer-col ul li a:hover {
+  color: var(--accent-cyan);
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--border-color);
+  padding-top: 24px;
+  text-align: center;
+  color: var(--text-dark);
+  font-size: var(--fs-sm);
+}
+
+/* ============================================================
+   [SECTION: FORM KONTAK]
+   Gaya input, textarea, dan tombol pada halaman about.html
+   ============================================================ */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.04em;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: var(--fs-base);
+  padding: 12px 16px;
+  transition: var(--transition);
+  outline: none;
+  width: 100%;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 140px;   /* <-- Ubah tinggi minimum textarea */
+}
+
+/* ============================================================
+   [SECTION: UTIL - KELAS PEMBANTU]
+   Kelas-kelas kecil yang bisa ditambahkan ke elemen mana saja.
+   ============================================================ */
+.text-center   { text-align: center; }
+.text-cyan     { color: var(--accent-cyan); }
+.text-orange   { color: var(--accent-orange); }
+.text-muted    { color: var(--text-muted); }
+.mt-8          { margin-top: 8px; }
+.mt-16         { margin-top: 16px; }
+.mt-24         { margin-top: 24px; }
+.mt-32         { margin-top: 32px; }
+.mb-8          { margin-bottom: 8px; }
+.mb-16         { margin-bottom: 16px; }
+.mb-24         { margin-bottom: 24px; }
+.mb-32         { margin-bottom: 32px; }
+.flex          { display: flex; }
+.flex-center   { display: flex; align-items: center; justify-content: center; }
+.gap-16        { gap: 16px; }
+
+/* ============================================================
+   [SECTION: RESPONSIVE / MOBILE]
+   Pengaturan tampilan di layar kecil (tablet dan HP).
+   Breakpoint: 768px ke bawah = mobile.
+   ============================================================ */
+@media (max-width: 1024px) {
+  .products-grid  { grid-template-columns: repeat(3, 1fr); }
+  .footer-grid    { grid-template-columns: 1fr 1fr; gap: 32px; }
+  h1              { font-size: 2.8rem; }
+}
+
+@media (max-width: 768px) {
+  /* --- Navbar Mobile --- */
+  .navbar-menu    { display: none; }       /* Sembunyikan menu di HP */
+  .navbar-cta     { display: none; }
+
+  /* --- Grid ke 1 kolom di Mobile --- */
+  .products-grid  { grid-template-columns: repeat(2, 1fr); }
+  .categories-grid { grid-template-columns: 1fr; }
+  .topup-grid     { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid    { grid-template-columns: 1fr; gap: 24px; }
+
+  /* --- Font lebih kecil di Mobile --- */
+  h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.75rem; }
+  .section-padding { padding: 48px 0; }
+}
+
+@media (max-width: 480px) {
+  .products-grid  { grid-template-columns: 1fr; }
+  .topup-grid     { grid-template-columns: 1fr; }
+  h1 { font-size: 1.9rem; }
+}

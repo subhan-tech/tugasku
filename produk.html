@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <!-- ============================================================
+       [HEAD] Produk & Top-Up Page
+       ============================================================ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produk & Top-Up — GameZONE</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+
+    /* ============================================================
+       [PAGE HEADER]
+       ============================================================ -->*/
+    .page-header {
+      background: linear-gradient(135deg, #070b14 0%, #0a1628 100%);
+      border-bottom: 1px solid var(--border-color);
+      padding: 64px 0 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: -60px;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 300px;
+      background: radial-gradient(ellipse, rgba(0,212,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .page-header .breadcrumb {
+      font-size: var(--fs-sm);
+      color: var(--text-dark);
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-header .breadcrumb a { color: var(--text-muted); }
+    .page-header .breadcrumb a:hover { color: var(--accent-cyan); }
+
+    .page-header h1 {
+      font-size: var(--fs-4xl);
+      color: #fff;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-header p {
+      max-width: 480px;
+      margin: 12px auto 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ============================================================
+       [TAB NAVIGASI - BAGIAN 1 DAN 2]
+       Tab untuk berpindah antara "Retail Game" dan "Jasa Top-Up".
+       ============================================================ */
+    .product-tabs {
+      background-color: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0;
+      position: sticky;
+      top: 64px;             /* <-- Mengikuti di bawah navbar */
+      z-index: 99;
+    }
+
+    .tabs-nav {
+      display: flex;
+      gap: 0;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: var(--fs-base);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 18px 32px;
+      transition: var(--transition);
+    }
+
+    .tab-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .tab-btn.active {
+      color: var(--accent-cyan);
+      border-bottom-color: var(--accent-cyan);
+    }
+
+    /* ============================================================
+       [TAB CONTENT]
+       Konten yang tampil/sembunyi sesuai tab aktif.
+       ============================================================ */
+    .tab-content {
+      display: none;            /* Semua tersembunyi default */
+    }
+
+    .tab-content.active {
+      display: block;           /* Hanya yang aktif yang tampil */
+    }
+
+    /* ============================================================
+       [FILTER BAR - GAME RETAIL]
+       Tombol filter genre/platform di atas daftar game.
+       ============================================================ */
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+      align-items: center;
+    }
+
+    .filter-bar span {
+      font-size: var(--fs-sm);
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-right: 4px;
+    }
+
+    .filter-btn {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      font-size: var(--fs-xs);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 7px 16px;
+      border-radius: 50px;
+      transition: var(--transition);
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+      background-color: rgba(0, 212, 255, 0.06);
+    }
+
+    /* ============================================================
+       [KARTU GAME RETAIL]
+       Kartu untuk menampilkan daftar game di bagian 1.
+       ============================================================ */
+    .game-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .game-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0, 212, 255, 0.4);
+      box-shadow: 0 12px 40px rgba(0, 212, 255, 0.12);
+    }
+
+    /* Badge diskon di pojok kiri atas gambar */
+    .game-card .discount-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background-color: var(--accent-orange);
+      color: #fff;
+      font-size: var(--fs-xs);
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 4px;
+    }
+
+    .game-card .card-img-wrap {
+      position: relative;          /* Untuk penempatan badge diskon */
+    }
+
+    .game-card .card-img-wrap img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      background: var(--bg-secondary);
+      display: block;
+    }
+
+    .game-card .card-body {
+      padding: 16px;
+    }
+
+    .game-card .card-platform-tags {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .platform-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 3px;
+      border: 1px solid var(--border-color);
+      color: var(--text-dark);
+    }
+
+    .platform-tag.pc    { border-color: rgba(0,212,255,0.3); color: var(--accent-cyan); }
+    .platform-tag.ps5   { border-color: rgba(107,153,255,0.3); color: #6b99ff; }
+    .platform-tag.xbox  { border-color: rgba(52,211,153,0.3); color: #34d399; }
+    .platform-tag.nsw   { border-color: rgba(255,107,53,0.3); color: var(--accent-orange); }
+
+    .game-card .card-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: var(--fs-xl);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .game-card .card-genre {
+      font-size: var(--fs-xs);
+      color: var(--text-dark);
+      margin-bottom: 12px;
+    }
+
+    .game-card .card-price-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .game-card .price-final {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: var(--fs-2xl);
+      font-weight: 700;
+      color: var(--accent-cyan);
+    }
+
+    .game-card .price-original {
+      font-size: var(--fs-sm);
+      color: var(--text-dark);
+      text-decoration: line-through;
+    }
+
+    /* ============================================================
+       [KARTU TOP-UP]
+       Kartu untuk setiap game dalam daftar top-up.
+       ============================================================ */
+    .topup-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .topup-card:hover {
+      border-color: rgba(255, 107, 53, 0.4);
+      box-shadow: 0 12px 40px rgba(255, 107, 53, 0.1);
+      transform: translateY(-4px);
+    }
+
+    /* Header kartu top-up: gambar logo game */
+    .topup-card .topup-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background-color: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .topup-card .game-logo {
+      width: 60px;
+      height: 60px;
+      border-radius: var(--radius-md);
+      object-fit: cover;
+      background: var(--bg-card);
+      flex-shrink: 0;
+    }
+
+    .topup-card .game-info h4 {
+      font-size: var(--fs-lg);
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .topup-card .game-info p {
+      font-size: var(--fs-xs);
+      color: var(--text-dark);
+    }
+
+    /* Daftar nominal top-up dalam satu kartu game */
+    .topup-card .topup-options {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .topup-option-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .topup-option-row:hover {
+      border-color: rgba(255, 107, 53, 0.4);
+      background-color: rgba(255, 107, 53, 0.04);
+    }
+
+    .topup-option-row .nominal {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: var(--fs-base);
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .topup-option-row .nominal small {
+      font-family: 'Inter', sans-serif;
+      font-size: var(--fs-xs);
+      color: var(--text-dark);
+      font-weight: 400;
+      display: block;
+    }
+
+    .topup-option-row .price-topup {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: var(--fs-lg);
+      font-weight: 700;
+      color: var(--accent-orange);
+    }
+
+    /* Tombol "Beli Top-Up" di bawah kartu */
+    .topup-card .topup-footer {
+      padding: 0 16px 16px;
+    }
+
+    /* ============================================================
+       [SECTION TITLE - DALAM HALAMAN PRODUK]
+       ============================================================ */
+    .product-section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .product-section-title h2 {
+      font-size: var(--fs-3xl);
+      color: var(--text-primary);
+    }
+
+    .product-section-title h2 span {
+      color: var(--accent-cyan);
+    }
+
+    @media (max-width: 768px) {
+      .topup-grid { grid-template-columns: 1fr; }
+      .tab-btn    { padding: 14px 20px; font-size: var(--fs-sm); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       [NAVBAR]
+       ============================================================ -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="navbar-logo">GAME<span>ZONE</span></a>
+      <ul class="navbar-menu">
+        <li><a href="index.html">Beranda</a></li>
+        <li><a href="kategori.html">Kategori</a></li>
+        <li><a href="produk.html" class="active">Produk & Top-Up</a></li>
+        <li><a href="about.html">Tentang Kami</a></li>
+        <li><a href="produk.html" class="navbar-cta">Top-Up Sekarang</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <!-- ============================================================
+       [PAGE HEADER]
+       ============================================================ -->
+  <div class="page-header">
+    <div class="container">
+      <p class="breadcrumb"><a href="index.html">Beranda</a> › Produk & Top-Up</p>
+      <h1>Produk & <span style="color: var(--accent-cyan)">Top-Up</span></h1>
+      <p>Semua game retail dan layanan top-up dalam satu tempat.</p>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       [TAB NAVIGASI]
+       Klik untuk berpindah antara "Retail Game" dan "Jasa Top-Up".
+       ============================================================ -->
+  <div class="product-tabs">
+    <div class="container">
+      <div class="tabs-nav">
+        <!-- Tab 1 aktif secara default -->
+        <button class="tab-btn active" onclick="switchTab('retail')">
+          🕹️ Retail Game
+        </button>
+        <!-- Tab 2 untuk top-up -->
+        <button class="tab-btn" onclick="switchTab('topup')">
+          ⚡ Jasa Top-Up
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       [TAB 1: RETAIL GAME]
+       Konten untuk bagian daftar game retail.
+       ============================================================ -->
+  <div id="tab-retail" class="tab-content active">
+    <section class="section-padding">
+      <div class="container">
+
+        <!-- Judul bagian game retail -->
+        <div class="product-section-title">
+          <div>
+            <span class="eyebrow" style="font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent-cyan); display:block; margin-bottom:6px;">Bagian 1</span>
+            <h2>Daftar <span>Game Retail</span></h2>
+          </div>
+          <!-- Jumlah produk ditampilkan di kanan -->
+          <span style="color: var(--text-muted); font-size: var(--fs-sm);">Menampilkan 8 produk</span>
+        </div>
+
+        <!-- Filter platform -->
+        <div class="filter-bar">
+          <span>Filter:</span>
+          <button class="filter-btn active">Semua</button>
+          <button class="filter-btn">PC</button>
+          <button class="filter-btn">PS5</button>
+          <button class="filter-btn">Xbox</button>
+          <button class="filter-btn">Nintendo</button>
+        </div>
+
+        <!-- ============================================================
+             GRID GAME RETAIL (4 Kolom)
+             Tambah <div class="game-card"> untuk produk baru.
+             ============================================================ -->
+        <div class="products-grid">
+
+          <!-- GAME 1: PC Game -->
+          <div class="game-card">
+            <div class="card-img-wrap">
+              <!-- Ganti URL gambar dengan cover game asli -->
+              <img src="https://placehold.co/400x225/111827/00d4ff?text=Game+PC+1" alt="Game PC 1" />
+              <span class="discount-badge">-20%</span>   <!-- Hapus baris ini jika tidak ada diskon -->
+            </div>
+            <div class="card-body">
+              <div class="card-platform-tags">
+                <span class="platform-tag pc">PC</span>
+                <span class="platform-tag">Steam</span>
+              </div>
+              <!-- Ubah nama game di sini -->
+              <h3 class="card-title">Nama Game PC 1</h3>
+              <p class="card-genre">Genre: Action RPG | Developer: Studio XYZ</p>
+              <div class="card-price-row">
+                <span class="price-final">Rp 249.000</span>
+                <span class="price-original">Rp 310.000</span>  <!-- Hapus jika tidak ada harga coret -->
+              </div>
+              <a href="#" class="btn-primary" style="width:100%;text-align:center;padding:10px;">Beli Sekarang</a>
+            </div>
+          </div>
+
+          <!-- GAME 2: PC Game -->
+          <div class="game-card">
+            <div class="card-img-wrap">
+              <img src="https://placehold.co/400x225/111827/ff6b35?text=Game+PC+2" alt="Game PC 2" />
+            </div>
+            <div class="card-body">
+              <div class="card-platform-tags">
+                <span class="platform-tag pc">PC</span>
+                <span class="platform-tag">Steam</span>
+              </div>
+              <h3 class="card-title">Nama Game PC 2</h3>
+              <p class="card-genre">Genre: FPS | Developer: Studio ABC</p>
+              <div class="card-price-row">
+                <span class="price-final">Rp 179.000</span>
+              </div>
+              <a href="#" class="btn-primary" style="width:100%;text-align:center;padding:10px;">Beli Sekarang</a>
+            </div>
+          </div>
+
+          <!-- GAME 3: Game Konsol PS5 -->
+          <div class="game-card">
+            <div class="card-img-wrap">
+              <img src="https://placehold.co/400x225/111827/6b99ff?text=Game+PS5" alt="Game PS5" />
+              <span class="discount-badge">-15%</span>
+            </div>
+            <div class="card-body">
+              <div class="card-platform-tags">
+                <span class="platform-tag ps5">PS5</span>
+              </div>
+              <h3 class="card-title">Nama Game Konsol PS5</h3>
+              <p class="card-genre">Genre: Open World | Developer: Studio DEF</p>
+              <div class="card-price-row">
+                <span class="price-final">Rp 849.000</span>
+                <span class="price-original">Rp 999.000</span>
+              </div>
+              <a href="#" class="btn-primary" style="width:100%;text-align:center;padding:10px;">Beli Sekarang</a>
+            </div>
+          </div>
+
+          <!-- GAME 4: Game Konsol Xbox -->
+          <div class="game-card">
+            <div class="card-img-wrap">
+              <img src="https://placehold.co/400x225/111827/34d399?text=Game+Xbox" alt="Game Xbox" />
+            </div>
+            <div class="card-body">
+              <div class="card-platform-tags">
+                <span class="platform-tag xbox">Xbox</span>
+              </div>
+              <h3 class="card-title">Nama Game Konsol Xbox</h3>
+              <p class="card-genre">Genre: Sports | Developer: Studio GHI</p>
+              <div class="card-price-row">
+                <span class="price-final">Rp 799.000</span>
+              </div>
+              <a href="#" class="btn-primary" style="width:100%;text-align:center;padding:10px;">Beli Sekarang</a>
+            </div>
+          </div>
+
+          <!-- GAME 5: PC Game tambahan -->
+          <div class="game-card">
+            <div class="card-img-wrap">
+              <img src="https://placehold.co/400x225/111827/00d4ff?text=Game+PC+3" alt="Game PC 3" />
+            </div>
+            <div class="card-body">
+              <div class="card-platform-tags">
+                <span class="platform-tag pc">PC</span>
+              </div>
+              <h3 class="card-title">Nama Game PC 3</h3>
+              <p class="card-genre">Genre: Strategy | Developer: Studio JKL</p>
+              <div class="card-price-row">
+                <span class="price-final">Rp 199.000</span>
+              </div>
+              <a href="#" class="btn-primary" style="width:100%;text-align:center;padding:10px;">Beli Sekarang</a>
+            </div>
+          </div>
+
+          <!-- GAME 6: Nintendo Switch -->
+          <div class="game-card">
+            <div class="card-img-wrap">
+              <img src="https://placehold.co/400x225/111827/ff6b35?text=Game+Switch" alt="Nintendo Switch" />
+            </div>
+            <div class="card-body">
+              <div class="card-platform-tags">
+                <span class="platform-tag nsw">Switch</span>
+              </div>
+              <h3 class="card-title">Nama Game Nintendo Switch</h3>
+              <p class="card-genre">Genre: Platformer | Developer: Nintendo</p>
+              <div class="card-price-row">
+                <span class="price-final">Rp 699.000</span>
+              </div>
+              <a href="#" class="btn-primary" style="width:100%;text-align:center;padding:10px;">Beli Sekarang</a>
+            </div>
+          </div>
+
+          <!-- GAME 7: PC Game tambahan -->
+          <div class="game-card">
+            <div class="card-img-wrap">
+              <img src="https://placehold.co/400x225/111827/6b99ff?text=Game+PC+4" alt="Game PC 4" />
+              <span class="discount-badge">-30%</span>
+            </div>
+            <div class="card-body">
+              <div class="card-platform-tags">
+                <span class="platform-tag pc">PC</span>
+                <span class="platform-tag">GOG</span>
+              </div>
+              <h3 class="card-title">Nama Game PC 4</h3>
+              <p class="card-genre">Genre: Horror | Developer: Studio MNO</p>
+              <div class="card-price-row">
+                <span class="price-final">Rp 98.000</span>
+                <span class="price-original">Rp 140.000</span>
+              </div>
+              <a href="#" class="btn-primary" style="width:100%;text-align:center;padding:10px;">Beli Sekarang</a>
+            </div>
+          </div>
+
+          <!-- GAME 8: PS5 tambahan -->
+          <div class="game-card">
+            <div class="card-img-wrap">
+              <img src="https://placehold.co/400x225/111827/34d399?text=Game+PS5+2" alt="Game PS5 2" />
+            </div>
+            <div class="card-body">
+              <div class="card-platform-tags">
+                <span class="platform-tag ps5">PS5</span>
+                <span class="platform-tag ps5">PS4</span>
+              </div>
+              <h3 class="card-title">Nama Game Konsol PS5 #2</h3>
+              <p class="card-genre">Genre: Fighting | Developer: Studio PQR</p>
+              <div class="card-price-row">
+                <span class="price-final">Rp 749.000</span>
+              </div>
+              <a href="#" class="btn-primary" style="width:100%;text-align:center;padding:10px;">Beli Sekarang</a>
+            </div>
+          </div>
+
+        </div>
+        <!-- [/GAME RETAIL GRID] -->
+
+      </div>
+    </section>
+  </div>
+  <!-- [/TAB 1: RETAIL GAME] -->
+
+
+  <!-- ============================================================
+       [TAB 2: JASA TOP-UP]
+       Konten untuk bagian daftar top-up game.
+       ============================================================ -->
+  <div id="tab-topup" class="tab-content">
+    <section class="section-padding">
+      <div class="container">
+
+        <!-- Judul bagian top-up -->
+        <div class="product-section-title">
+          <div>
+            <span class="eyebrow" style="font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--accent-orange); display:block; margin-bottom:6px;">Bagian 2</span>
+            <h2>Daftar <span style="color: var(--accent-orange)">Jasa Top-Up</span></h2>
+          </div>
+          <span style="color: var(--text-muted); font-size: var(--fs-sm);">Proses otomatis & instan</span>
+        </div>
+
+        <!-- ============================================================
+             GRID TOP-UP (3 Kolom)
+             Tambah <div class="topup-card"> untuk game baru.
+             Tambah <div class="topup-option-row"> untuk nominal baru.
+             ============================================================ -->
+        <div class="topup-grid">
+
+          <!-- ===== TOP-UP: MOBILE LEGENDS ===== -->
+          <div class="topup-card">
+            <div class="topup-header">
+              <!-- Ganti URL gambar dengan logo Mobile Legends asli -->
+              <img class="game-logo" src="https://placehold.co/60x60/1a2340/00d4ff?text=ML" alt="Mobile Legends" />
+              <div class="game-info">
+                <h4>Mobile Legends</h4>
+                <p>Bang Bang — Diamond</p>
+              </div>
+            </div>
+            <div class="topup-options">
+              <!-- Setiap baris = satu pilihan nominal. Tambah/hapus sesuai kebutuhan. -->
+              <div class="topup-option-row">
+                <div class="nominal">
+                  86 Diamond
+                  <small>+ 10 Bonus Diamond</small>
+                </div>
+                <span class="price-topup">Rp 18.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">
+                  172 Diamond
+                  <small>+ 20 Bonus Diamond</small>
+                </div>
+                <span class="price-topup">Rp 35.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">
+                  344 Diamond
+                  <small>+ 40 Bonus Diamond</small>
+                </div>
+                <span class="price-topup">Rp 69.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">
+                  706 Diamond
+                  <small>+ 80 Bonus Diamond</small>
+                </div>
+                <span class="price-topup">Rp 138.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">
+                  2195 Diamond
+                  <small>+ Bonus Weekend</small>
+                </div>
+                <span class="price-topup">Rp 420.000</span>
+              </div>
+            </div>
+            <div class="topup-footer">
+              <!-- Ubah href ke WhatsApp atau sistem order -->
+              <a href="https://wa.me/6281234567890?text=Halo, saya mau top-up Mobile Legends" class="btn-orange" style="width:100%;text-align:center;padding:11px;">
+                ⚡ Beli Top-Up ML
+              </a>
+            </div>
+          </div>
+          <!-- [/TOP-UP: MOBILE LEGENDS] -->
+
+
+          <!-- ===== TOP-UP: GENSHIN IMPACT ===== -->
+          <div class="topup-card">
+            <div class="topup-header">
+              <img class="game-logo" src="https://placehold.co/60x60/1a2340/ff6b35?text=GI" alt="Genshin Impact" />
+              <div class="game-info">
+                <h4>Genshin Impact</h4>
+                <p>Genesis Crystal / Welkin Moon</p>
+              </div>
+            </div>
+            <div class="topup-options">
+              <div class="topup-option-row">
+                <div class="nominal">
+                  60 Genesis Crystal
+                  <small>60 Primogem</small>
+                </div>
+                <span class="price-topup">Rp 14.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">
+                  300 Genesis Crystal
+                  <small>300 + 30 Bonus</small>
+                </div>
+                <span class="price-topup">Rp 66.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">
+                  980 Genesis Crystal
+                  <small>980 + 110 Bonus</small>
+                </div>
+                <span class="price-topup">Rp 210.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">
+                  Blessing of Welkin
+                  <small>90 Primogem/hari, 30 hari</small>
+                </div>
+                <span class="price-topup">Rp 72.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">
+                  6480 Genesis Crystal
+                  <small>Best Value!</small>
+                </div>
+                <span class="price-topup">Rp 1.350.000</span>
+              </div>
+            </div>
+            <div class="topup-footer">
+              <a href="https://wa.me/6281234567890?text=Halo, saya mau top-up Genshin Impact" class="btn-orange" style="width:100%;text-align:center;padding:11px;">
+                ⚡ Beli Top-Up Genshin
+              </a>
+            </div>
+          </div>
+          <!-- [/TOP-UP: GENSHIN IMPACT] -->
+
+
+          <!-- ===== TOP-UP: PUBG MOBILE ===== -->
+          <div class="topup-card">
+            <div class="topup-header">
+              <img class="game-logo" src="https://placehold.co/60x60/1a2340/34d399?text=PG" alt="PUBG Mobile" />
+              <div class="game-info">
+                <h4>PUBG Mobile</h4>
+                <p>Unknown Cash (UC)</p>
+              </div>
+            </div>
+            <div class="topup-options">
+              <div class="topup-option-row">
+                <div class="nominal">60 UC</div>
+                <span class="price-topup">Rp 15.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">325 UC</div>
+                <span class="price-topup">Rp 72.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">660 UC</div>
+                <span class="price-topup">Rp 140.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">1800 UC</div>
+                <span class="price-topup">Rp 370.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">3850 UC</div>
+                <span class="price-topup">Rp 770.000</span>
+              </div>
+            </div>
+            <div class="topup-footer">
+              <a href="https://wa.me/6281234567890?text=Halo, saya mau top-up PUBG Mobile" class="btn-orange" style="width:100%;text-align:center;padding:11px;">
+                ⚡ Beli Top-Up PUBG
+              </a>
+            </div>
+          </div>
+          <!-- [/TOP-UP: PUBG MOBILE] -->
+
+
+          <!-- ===== TOP-UP: FREE FIRE ===== -->
+          <div class="topup-card">
+            <div class="topup-header">
+              <img class="game-logo" src="https://placehold.co/60x60/1a2340/ff6b35?text=FF" alt="Free Fire" />
+              <div class="game-info">
+                <h4>Free Fire</h4>
+                <p>Diamond</p>
+              </div>
+            </div>
+            <div class="topup-options">
+              <div class="topup-option-row">
+                <div class="nominal">70 Diamond</div>
+                <span class="price-topup">Rp 14.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">355 Diamond</div>
+                <span class="price-topup">Rp 66.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">720 Diamond</div>
+                <span class="price-topup">Rp 133.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">
+                  Weekly Pass
+                  <small>100 Diamond + Bonus</small>
+                </div>
+                <span class="price-topup">Rp 21.000</span>
+              </div>
+            </div>
+            <div class="topup-footer">
+              <a href="https://wa.me/6281234567890?text=Halo, saya mau top-up Free Fire" class="btn-orange" style="width:100%;text-align:center;padding:11px;">
+                ⚡ Beli Top-Up FF
+              </a>
+            </div>
+          </div>
+          <!-- [/TOP-UP: FREE FIRE] -->
+
+
+          <!-- ===== TOP-UP: VALORANT ===== -->
+          <div class="topup-card">
+            <div class="topup-header">
+              <img class="game-logo" src="https://placehold.co/60x60/1a2340/ff4655?text=VL" alt="Valorant" />
+              <div class="game-info">
+                <h4>Valorant</h4>
+                <p>VP (Valorant Points)</p>
+              </div>
+            </div>
+            <div class="topup-options">
+              <div class="topup-option-row">
+                <div class="nominal">475 VP</div>
+                <span class="price-topup">Rp 35.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">1000 VP</div>
+                <span class="price-topup">Rp 70.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">2050 VP</div>
+                <span class="price-topup">Rp 133.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">3650 VP</div>
+                <span class="price-topup">Rp 230.000</span>
+              </div>
+            </div>
+            <div class="topup-footer">
+              <a href="https://wa.me/6281234567890?text=Halo, saya mau top-up Valorant" class="btn-orange" style="width:100%;text-align:center;padding:11px;">
+                ⚡ Beli Top-Up Valorant
+              </a>
+            </div>
+          </div>
+          <!-- [/TOP-UP: VALORANT] -->
+
+
+          <!-- ===== TOP-UP: HONKAI STAR RAIL ===== -->
+          <div class="topup-card">
+            <div class="topup-header">
+              <img class="game-logo" src="https://placehold.co/60x60/1a2340/6b99ff?text=HSR" alt="Honkai Star Rail" />
+              <div class="game-info">
+                <h4>Honkai: Star Rail</h4>
+                <p>Oneiric Shard</p>
+              </div>
+            </div>
+            <div class="topup-options">
+              <div class="topup-option-row">
+                <div class="nominal">60 Oneiric Shard</div>
+                <span class="price-topup">Rp 14.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">300 Oneiric Shard
+                  <small>+ 30 Bonus</small>
+                </div>
+                <span class="price-topup">Rp 66.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">980 Oneiric Shard
+                  <small>+ 110 Bonus</small>
+                </div>
+                <span class="price-topup">Rp 210.000</span>
+              </div>
+              <div class="topup-option-row">
+                <div class="nominal">
+                  Express Supply Pass
+                  <small>300 Stellar Jade, 30 hari</small>
+                </div>
+                <span class="price-topup">Rp 72.000</span>
+              </div>
+            </div>
+            <div class="topup-footer">
+              <a href="https://wa.me/6281234567890?text=Halo, saya mau top-up Honkai Star Rail" class="btn-orange" style="width:100%;text-align:center;padding:11px;">
+                ⚡ Beli Top-Up HSR
+              </a>
+            </div>
+          </div>
+          <!-- [/TOP-UP: HONKAI STAR RAIL] -->
+
+        </div>
+        <!-- [/TOPUP GRID] -->
+
+        <!-- Catatan cara order -->
+        <div style="background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 28px; margin-top: 40px; text-align:center;">
+          <h4 style="color: var(--text-primary); margin-bottom:10px;">💬 Cara Order Top-Up</h4>
+          <p style="max-width: 500px; margin: 0 auto; font-size: var(--fs-sm);">
+            Klik tombol "Beli Top-Up" → pilih nominal → hubungi CS via WhatsApp →
+            lakukan pembayaran → top-up masuk otomatis ke akun kamu. Proses &lt; 5 menit!
+          </p>
+        </div>
+
+      </div>
+    </section>
+  </div>
+  <!-- [/TAB 2: JASA TOP-UP] -->
+
+
+  <!-- ============================================================
+       [FOOTER]
+       ============================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="logo">GAME<span>ZONE</span></span>
+          <p>Toko retail game dan jasa top-up terpercaya. Melayani pelanggan sejak 2020.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigasi</h4>
+          <ul>
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="kategori.html">Kategori</a></li>
+            <li><a href="produk.html">Produk & Top-Up</a></li>
+            <li><a href="about.html">Tentang Kami</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Produk</h4>
+          <ul>
+            <li><a href="#">Game PC</a></li>
+            <li><a href="#">Game Konsol</a></li>
+            <li><a href="#">Mobile Legends</a></li>
+            <li><a href="#">Genshin Impact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Kontak</h4>
+          <ul>
+            <li><a href="https://wa.me/6281234567890">WhatsApp</a></li>
+            <li><a href="mailto:cs@gamezone.id">cs@gamezone.id</a></li>
+            <li><a href="about.html">Lokasi Kami</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 GameZONE. Semua hak dilindungi. | Retail Game & Jasa Top-Up</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       [JAVASCRIPT - TAB SWITCHING]
+       Logika untuk berpindah antara tab Retail dan Top-Up.
+       ============================================================ -->
+  <script>
+    /**
+     * switchTab(tabName)
+     * Fungsi untuk menampilkan konten tab yang dipilih.
+     * @param {string} tabName - "retail" atau "topup"
+     */
+    function switchTab(tabName) {
+      // Sembunyikan semua konten tab
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      // Hapus state aktif dari semua tombol tab
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+      // Tampilkan konten tab yang dipilih
+      document.getElementById('tab-' + tabName).classList.add('active');
+
+      // Aktifkan tombol tab yang sesuai (berdasarkan urutan: retail = 0, topup = 1)
+      const btnIndex = tabName === 'retail' ? 0 : 1;
+      document.querySelectorAll('.tab-btn')[btnIndex].classList.add('active');
+
+      // Scroll ke atas konten tab
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>
